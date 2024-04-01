@@ -20,16 +20,12 @@ export default {
         },
         publicationDate() {
             const date = new Date(this.project.created_at);
-            let day = date.getDate();
-            let month = date.getMonth() + 1;
+            let day = String(date.getDate()).padStart(2, '0');
+            let month = String(date.getMonth() + 1).padStart(2, '0');
             const year = date.getFullYear();
             const hours = date.getHours();
-            let minutes = date.getMinutes();
+            let minutes = String(date.getMinutes()).padStart(2, '0');
             const seconds = date.getSeconds();
-
-            if (minutes < 10) minutes = '0' + minutes;
-            if (day < 10) day = '0' + day;
-            if (month < 10) month = '0' + month;
             return `${day}/${month}/${year} alle ${hours}:${minutes}`;
         }
     }
@@ -44,7 +40,11 @@ export default {
             <p class="card-text">{{ abstract }}</p>
         </div>
         <ul class="list-group list-group-flush">
-            <li v-if="project.author">{{ project.user_id }}</li>
+            <li class="list-group-item">
+                <address>By:
+                    {{ project.author ? project.author.name : 'Anonimo' }}
+                </address>
+            </li>
             <li class="list-group-item">
                 <small>
                     Creato il: {{ publicationDate }}
