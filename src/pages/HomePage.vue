@@ -3,22 +3,23 @@ import ProjectsList from '../components/projects/ProjectsList.vue';
 import BasePagination from '../components/BasePagination.vue';
 import AppAlert from '../components/AppAlert.vue';
 import axios from 'axios';
+import { store } from '../data/store';
 const defaultEndpoint = 'http://localhost:8000/api/projects/';
 
 export default {
     name: 'Home Page',
     components: { ProjectsList, BasePagination, AppAlert },
     data: () => ({
+        store,
         projects: {
             data: [],
-            links: []
+            links: [],
         },
-        isLoading: false,
         isAlertOpen: false
     }),
     methods: {
         fetchProjects(endpoint = defaultEndpoint) {
-            this.isLoading = true;
+            store.isLoading = true;
             axios.get(endpoint).then(res => {
                 this.isAlertOpen = false;
                 const { data, links } = res.data;
@@ -27,7 +28,7 @@ export default {
                 console.error(err);
                 this.isAlertOpen = true;
             }).then(() => {
-                this.isLoading = false;
+                store.isLoading = false;
             })
         }
     },
@@ -41,7 +42,7 @@ export default {
     <AppAlert :show="isAlertOpen" @close="isAlertOpen = false" @retry="fetchProjects" />
     <h1>Boolfolio</h1>
 
-    <div v-if="!isLoading">
+    <div v-if="!store.isLoading">
         <ProjectsList :projects="projects.data" />
         <BasePagination :links="projects.links" @changePage="fetchProjects" />
     </div>

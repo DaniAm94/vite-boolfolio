@@ -1,8 +1,12 @@
 <script>
 import AppHeader from './components/AppHeader.vue';
+import { store } from './data/store'
 export default {
   name: 'Boolfolio',
-  components: { AppHeader }
+  components: { AppHeader },
+  data: () => ({
+    store
+  })
 
 };
 </script>
@@ -10,7 +14,7 @@ export default {
 <template>
   <AppHeader />
   <main class="container pt-5">
-    <AppLoader v-if="isLoading" />
+    <AppLoader v-if="store.isLoading" />
     <!-- Contenuti pagina-->
     <RouterView />
   </main>
