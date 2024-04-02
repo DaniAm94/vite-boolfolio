@@ -22,7 +22,7 @@ export default {
                             <RouterLink class="nav-link " to="/">Home</RouterLink>
                         </li>
                         <li class="nav-item">
-                            <RouterLink class="nav-link " to="/contact-us">Contattaci</RouterLink>
+                            <RouterLink class="nav-link " :to="{ name: 'contact-us' }">Contattaci</RouterLink>
                         </li>
                     </ul>
                     <form class="d-flex" role="search">
