@@ -10,10 +10,10 @@ export default {
 </script>
 
 <template>
-    <section class="my-5" id="projects-list">
-        <ul v-if="projects.length" class="list-unstyled row row-cols-3 row-gap-4">
+    <section id="projects-list">
+        <ul v-if="projects.length" class="list-unstyled row row-cols-1 row-gap-4">
             <li class="col" v-for="project in projects" :key="project.id">
-                <ProjectCard :project="project" />
+                <ProjectCard :isDetailPage="false" :project="project" />
 
             </li>
         </ul>
