@@ -2,7 +2,8 @@
 export default {
     name: 'Project Card',
     props: {
-        project: Object
+        project: Object,
+        isDetailPage: Boolean
     },
     data: () => ({
         placeholder: 'https://th.bing.com/th/id/OIP.0daZHZau9A_NCIgruM3h1QHaHa?rs=1&pid=ImgDetMain'
@@ -33,27 +34,57 @@ export default {
 </script>
 
 <template>
-    <div class="card">
-        <img :src="project.image ? project.image : placeholder" class="card-img-top" alt="...">
-        <div class="card-body">
-            <h5 class="card-title">{{ project.title }}</h5>
-            <p class="card-text">{{ abstract }}</p>
+    <div class="card mt-3">
+        <div class="card-header d-flex justify-content-between align-items-center ">
+            <!-- Autore -->
+            <address class="mb-0">By:
+                {{ project.author ? project.author.name : 'Anonimo' }}
+            </address>
+
+
+            <!--Pulsante vedi dettaglio-->
+            <RouterLink v-if="!isDetailPage" :to="{ name: 'project-detail', params: { slug: project.slug } }"
+                class="btn btn-sm btn-primary ">
+                Vedi
+            </RouterLink>
         </div>
-        <ul class="list-group list-group-flush">
-            <li class="list-group-item">
-                <address>By:
-                    {{ project.author ? project.author.name : 'Anonimo' }}
-                </address>
-            </li>
-            <li class="list-group-item">
-                <small>
-                    Creato il: {{ publicationDate }}
-                </small>
-            </li>
-        </ul>
         <div class="card-body">
-            <a href="#" class="card-link">Card link</a>
-            <a href="#" class="card-link">Another link</a>
+            <div class="row">
+
+                <!--Immagine -->
+                <div v-if="project.image" class="col-3">
+                    <img class="img-fluid" :src="project.image" :alt="project.title">
+                </div>
+
+
+                <div class="col">
+
+                    <div class="d-flex justify-content-between align-items-start">
+
+                        <!--Titolo -->
+                        <h5 class="card-title mb-2 text-break">{{ project.title }}</h5>
+                        <!-- Type  -->
+                        <span v-if="project.type" class="badge" :style="{ backgroundColor: project.type.color }">
+                            {{ project.type.label }}
+                        </span>
+                        <span v-else class="badge text-bg-secondary ">Nessuna categoria</span>
+                    </div>
+
+
+                    <!--Data creazione-->
+                    <small class="card-subtitle text-body-secondary">
+                        Creato il: {{ publicationDate }}
+                    </small>
+
+                    <!--Descrizione -->
+                    <p class="card-text mt-2">{{ isDetailPage ? project.description : abstract }}</p>
+
+                    <!--Tecnologie -->
+                    <span v-for="technology in project.technologies"
+                        :class="`me-2 badge rounded-pill text-bg-${technology.color}`">{{ technology.label
+                        }}</span>
+                </div>
+            </div>
         </div>
     </div>
 </template>
