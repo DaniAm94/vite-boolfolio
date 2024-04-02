@@ -80,9 +80,12 @@ export default {
                     <p class="card-text mt-2">{{ isDetailPage ? project.description : abstract }}</p>
 
                     <!--Tecnologie -->
-                    <span v-for="technology in project.technologies"
-                        :class="`me-2 badge rounded-pill text-bg-${technology.color}`">{{ technology.label
-                        }}</span>
+                    <div v-if="project.technologies.length">
+                        <span v-for="technology in project.technologies"
+                            :class="`me-2 badge rounded-pill text-bg-${technology.color}`">
+                            {{ technology.label }}
+                        </span>
+                    </div>
                 </div>
             </div>
         </div>
