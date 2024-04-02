@@ -13,4 +13,4 @@ const router = createRouter({
     ]
 });
 
-export { router }:
+export { router };
