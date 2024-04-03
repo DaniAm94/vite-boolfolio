@@ -64,7 +64,8 @@ export default {
                         <!--Titolo -->
                         <h5 class="card-title mb-2 text-break">{{ project.title }}</h5>
                         <!-- Type  -->
-                        <RouterLink v-if="project.type" :to="{ name: 'type-projects', params: { slug: project.type.slug } }">
+                        <RouterLink v-if="project.type"
+                            :to="{ name: 'type-projects', params: { slug: project.type.slug } }">
                             <span class="badge" :style="{ backgroundColor: project.type.color }">
                                 {{ project.type.label }}
                             </span>
@@ -82,10 +83,12 @@ export default {
 
                     <!--Tecnologie -->
                     <div v-if="project.technologies.length">
-                        <span v-for="technology in project.technologies"
-                            :class="`me-2 badge rounded-pill text-bg-${technology.color}`">
-                            {{ technology.label }}
-                        </span>
+                        <RouterLink v-for="technology in project.technologies"
+                            :to="{ name: 'technology-projects', params: { slug: technology.slug } }">
+                            <span :class="`me-2 badge rounded-pill text-bg-${technology.color}`">
+                                {{ technology.label }}
+                            </span>
+                        </RouterLink>
                     </div>
                 </div>
             </div>
