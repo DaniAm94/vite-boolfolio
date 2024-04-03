@@ -1,4 +1,6 @@
 <script>
+import { RouterLink } from 'vue-router';
+
 export default {
     name: 'Project Card',
     props: {
@@ -26,7 +28,7 @@ export default {
             const year = date.getFullYear();
             const hours = date.getHours();
             let minutes = String(date.getMinutes()).padStart(2, '0');
-            const seconds = date.getSeconds();
+            //const seconds = date.getSeconds();
             return `${day}/${month}/${year} alle ${hours}:${minutes}`;
         }
     }
@@ -40,7 +42,6 @@ export default {
             <address class="mb-0">By:
                 {{ project.author ? project.author.name : 'Anonimo' }}
             </address>
-
 
             <!--Pulsante vedi dettaglio-->
             <RouterLink v-if="!isDetailPage" :to="{ name: 'project-detail', params: { slug: project.slug } }"
@@ -56,7 +57,6 @@ export default {
                     <img class="img-fluid" :src="project.image" :alt="project.title">
                 </div>
 
-
                 <div class="col">
 
                     <div class="d-flex justify-content-between align-items-start">
@@ -64,12 +64,13 @@ export default {
                         <!--Titolo -->
                         <h5 class="card-title mb-2 text-break">{{ project.title }}</h5>
                         <!-- Type  -->
-                        <span v-if="project.type" class="badge" :style="{ backgroundColor: project.type.color }">
-                            {{ project.type.label }}
-                        </span>
+                        <RouterLink v-if="project.type" :to="{ name: 'type-projects', params: { slug: project.type.slug } }">
+                            <span class="badge" :style="{ backgroundColor: project.type.color }">
+                                {{ project.type.label }}
+                            </span>
+                        </RouterLink>
                         <span v-else class="badge text-bg-secondary ">Nessuna categoria</span>
                     </div>
-
 
                     <!--Data creazione-->
                     <small class="card-subtitle text-body-secondary">
