@@ -29,6 +29,13 @@ export default {
     },
     created() {
         this.fetchProjects();
+    },
+    watch: {
+        '$route'(to, from) {
+            if (to.params.slug !== from.params.slug) {
+                this.fetchProjects();
+            }
+        }
     }
 }
 </script>
